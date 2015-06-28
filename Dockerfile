@@ -1,6 +1,6 @@
 FROM ubuntu:trusty
 
-MAINTAINER Wurstmeister 
+MAINTAINER Wurstmeister
 
 ENV KAFKA_VERSION="0.8.2.1" SCALA_VERSION="2.10"
 
@@ -13,6 +13,10 @@ RUN tar xf /tmp/kafka_${SCALA_VERSION}-${KAFKA_VERSION}.tgz -C /opt
 VOLUME ["/kafka"]
 
 ENV KAFKA_HOME /opt/kafka_${SCALA_VERSION}-${KAFKA_VERSION}
+
+ENV KAFKA_STATSD_METRICS_VERSION=0.4.1
+ADD kafka-statsd-metrics2-${KAFKA_STATSD_METRICS_VERSION}-all.jar ${KAFKA_HOME}/libs/kafka-statsd-metrics2-${KAFKA_STATSD_METRICS_VERSION}-all.jar
+
 ADD start-kafka.sh /usr/bin/start-kafka.sh
 ADD broker-list.sh /usr/bin/broker-list.sh
 CMD start-kafka.sh
